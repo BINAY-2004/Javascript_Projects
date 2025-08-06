@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="script.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 400px;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            border: 1px solid white;
+            border-radius: 30px;
+            padding: 36px;
+            position: absolute;
+            left: 50%;
+            top: 10%;
+            transform: translateX(-50%);
+            background: #C33764;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #2f44ff, #e75e89);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #4b5bec, #ff6797);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        .box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+
+        }
+
+        .box1 {
+
+            width: 100%;
+            height: 10%;
+            display: flex;
+            align-items: center;
+        }
+
+        .box1 input {
+            width: 260px;
+            height: 46px;
+            border: 0;
+            outline: 0;
+            border-radius: 30px;
+            padding-left: 20px;
+            font-size: 15px;
+        }
+        .box1 button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: 10px; /* spacing between input and button */
+    height: 46px;
+    width: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.box1 button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* optional hover effect */
+}
+
+.box1 button img {
+    width: 24px;
+    height: 24px;
+}
+
+
+        /* .box1 img {
+            width: 33px;
+            height: 44px;
+            margin-left: 20px;
+        } */
+
+        .box2 {
+            margin-top: 20px;
+            width: 100%;
+            height: 65%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box2 .temp {
+            margin-top: 10px;
+            font-size: 70px;
+        }
+
+        .box2 .place {
+            font-size: 37px;
+        }
+
+        .box3 {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+
+        .humid {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .wind {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-align: left;
+
+        }
+
+        i {
+            font-size: 39px;
+            color: rgb(255, 255, 255);
+        }
+
+        .humid div:last-child {
+            font-size: 20px;
+            color: aliceblue;
+        }
+
+        .wind div:last-child {
+            font-size: 20px;
+            color: white;
+        }
+
+        /* .wind-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.2;
+        } alternative to use text-align:left in wind class*/
+        .error{
+            text-align: left;
+            font-size: 14px;
+            margin-left: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+        .box2, .box3 {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .box2 .temp {
+        font-size: 50px;
+    }
+
+    .box2 .place {
+        font-size: 28px;
+    }
+}
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="box1">
+                <input type="text" id="country" placeholder="Enter City Name">
+                <button onclick="ritu()"><img src="images/search1-bgremoved (1).png"></button>
+            </div>
+            <div class="error">
+                <p>Invalid City Name</p>
+            </div>
+            <div class="box2">
+                <div class="picture"><img src="images/weather.png" alt="cloud" width="150px"></div>
+                <div class="temp">34c</div>
+                <div class="place">Germany</div>
+            </div>
+            <div class="box3">
+                <div class="humid">
+                    <i class="ri-water-percent-fill"></i>
+                    <div>
+                        <p class="humidity">64%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="wind">
+                    <i class="ri-windy-line"></i>
+                    <div class="wind-info">
+                        <p class="wind-speed">64</p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

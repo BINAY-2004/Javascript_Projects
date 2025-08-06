@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Weather App</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #4b5bec, #ff6797);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    width: 70%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    font-size: 16px;
+    background-color: #f1f1f1;
+}
+
+.search-box button {
+    background: none;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.search-box button img {
+    width: 35px;
+    height: 35px;
+}
+
+.weather-box {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.weather-icon {
+    width: 120px;
+    height: auto;
+}
+
+.temp {
+    font-size: 48px;
+    color: #333;
+}
+
+.location {
+    font-size: 28px;
+    color: #666;
+}
+
+.details {
+    display: none;
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.details .humidity,
+.details .wind {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+}
+
+.details i {
+    font-size: 35px;
+    color: #4b5bec;
+}
+
+.details p {
+    font-size: 14px;
+    color: #333;
+}
+
+.error {
+    color: red;
+    display: none;
+    margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .container {
+        padding: 16px;
+    }
+
+    .search-box input {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .temp {
+        font-size: 38px;
+    }
+
+    .location {
+        font-size: 22px;
+    }
+
+    .details i {
+        font-size: 30px;
+    }
+}
+
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="search-box">
+                <input type="text" id="cityInput" placeholder="Enter city name" />
+                <button onclick="getWeather()">
+                    <img src="images/search1-bgremoved (1).png" alt="Search" />
+                </button>
+            </div>
+
+            <p class="error">City not found 😢</p>
+
+            <div class="weather-box">
+                <img src="images/weather.png" class="weather-icon" />
+                <h1 class="temp">--°C</h1>
+                <h2 class="location">--</h2>
+            </div>
+
+            <div class="details">
+                <div class="humidity">
+                    <i class="ri-water-percent-fill"></i>
+                    <div>
+                        <p class="humidity-value">--%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="wind">
+                    <i class="ri-windy-line"></i>
+                    <div>
+                        <p class="wind-speed">-- km/h</p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apikey = "fe1c3735d00ca9a33b3950f9db98eb11";
+const apiurl = "https://api.openweathermap.org/data/2.5/weather?units=metric";
+
+const cityInput = document.querySelector("#cityInput");
+const weatherBox = document.querySelector(".weather-box");
+const details = document.querySelector(".details");
+const errorText = document.querySelector(".error");
+
+const tempEl = document.querySelector(".temp");
+const locationEl = document.querySelector(".location");
+const humidityEl = document.querySelector(".humidity-value");
+const windEl = document.querySelector(".wind-speed");
+
+async function getWeather() {
+    const city = cityInput.value.trim();
+    if (city === "") return;
+
+    try {
+        const resp = await fetch(`${apiurl}&appid=${apikey}&q=${city}`);
+        if (!resp.ok) {
+            showError();
+            return;
+        }
+
+        const data = await resp.json();
+        updateUI(data);
+    } catch (err) {
+        showError();
+        console.error(err);
+    }
+}
+
+function updateUI(data) {
+    tempEl.innerHTML = `${Math.round(data.main.temp)}°C`;
+    locationEl.innerHTML = data.name;
+    humidityEl.innerHTML = `${data.main.humidity}%`;
+    windEl.innerHTML = `${data.wind.speed} km/h`;
+
+    errorText.style.display = "none";
+    weatherBox.style.display = "flex";
+    details.style.display = "flex";
+}
+
+function showError() {
+    errorText.style.display = "block";
+    weatherBox.style.display = "none";
+    details.style.display = "none";
+}
+
+    </script>
+</body>
+</html>
